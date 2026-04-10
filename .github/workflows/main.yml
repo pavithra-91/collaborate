@@ -1,14 +1,25 @@
-name : Basic CI workflows
+name : Run tests
 on:
     push:
         branches : ["main"]
     pull_request:
             branches: ["main"]
 jobs:
-    build:
+    test:
         runs-on: ubuntu-latest
         steps:
             - name: checkout repository
               uses : actions/checkout@v3
-            - name: Display a message
-              run: echo "Hi github actions"
+            - name: set up python
+              uses: actions/setup-python@v3
+              with:
+                python-version: '3.x'
+            - name: install dependancies
+              run: |
+                    pip install -r requirements
+                 
+            - name: Run tests
+              run: |
+                pytest
+
+            
